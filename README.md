@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml)
 
-**App en ligne : [simulateur-compliance-frontend.vercel.app](https://simulateur-compliance-frontend.vercel.app)** (frontend Vercel + [API backend](https://api-production-5fff.up.railway.app/health) sur Railway). Sans `RPC_URL`/`TOKEN_ADDRESS` configurés côté serveur — renseigne-les dans le formulaire du diagnostic on-chain pour tester contre un vrai token.
+**App en ligne : [simulateur-compliance-frontend.vercel.app](https://simulateur-compliance-frontend.vercel.app)** (frontend Vercel + [API backend](https://api-production-5fff.up.railway.app/health) sur Railway). Un vrai token T-REX de démo est configuré par défaut côté serveur (déployé sur un nœud dédié, également hébergé sur Railway) — le diagnostic on-chain fonctionne dès qu'on renseigne `from`/`to`/`amount`, sans RPC ni adresse à fournir. Comptes de démo tout prêts : `0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc` (Alice, 1000 SIMT) → `0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f` (Dave) pour un transfert autorisé, ou → `0x976EA74026E726554dB657fA54763abd0C3a0aa9` (Bob, pays non autorisé par le module de compliance) pour voir un refus.
 
 Vérifie un security token ERC-3643 (T-REX) sous deux angles complémentaires, reliés entre eux :
 
@@ -17,8 +17,9 @@ Chaque volet renvoie vers l'autre : une obligation MiCA affiche les modules on-c
 |---|---|---|
 | `backend/` | API Express (diagnostic on-chain + moteur de règles MiCA) et CLI de diagnostic | [`backend/README.md`](backend/README.md) |
 | `frontend/` | Interface web (diagnostic on-chain, rejeu de scénarios, wizard MiCA) | [`frontend/README.md`](frontend/README.md) |
+| `chain-demo/` | Source du token T-REX de démo servi en production (pas un projet pnpm) | [`chain-demo/README.md`](chain-demo/README.md) |
 
-Les deux sont des projets pnpm indépendants (workspace propre à chacun), sans `package.json` racine.
+`backend/` et `frontend/` sont des projets pnpm indépendants (workspace propre à chacun), sans `package.json` racine.
 
 ## Démarrage rapide (local)
 

@@ -27,6 +27,8 @@ Variables d'environnement (`.env`) :
 
 Aucune des deux variables `RPC_URL`/`TOKEN_ADDRESS` n'est requise pour démarrer le serveur : sans elles, le volet MiCA fonctionne normalement et le volet on-chain répond avec une erreur 400 explicite tant qu'aucune valeur n'est fournie (côté serveur ou dans la requête).
 
+**En production**, ces deux variables sont renseignées : `RPC_URL` pointe vers un second service Railway (`chain`, même projet) qui fait tourner un nœud Hardhat avec la suite T-REX de référence ([TokenySolutions/T-REX](https://github.com/TokenySolutions/T-REX)) déployée dessus au démarrage — voir `chain/` (hors du repo applicatif, code source dans le service Railway) pour le script de déploiement. `TOKEN_ADDRESS` pointe vers le token de démo qui en résulte. Les adresses de compte sont déterministes (mêmes comptes Hardhat #0-#19 à chaque redémarrage du conteneur) : voir le README racine pour des exemples `from`/`to` prêts à l'emploi.
+
 ## Scripts
 
 ```bash
