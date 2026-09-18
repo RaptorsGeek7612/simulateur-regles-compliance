@@ -8,14 +8,13 @@ interface Node {
 }
 
 const NODE_COUNT = 46;
-const LINK_DISTANCE = 150;
 const NODE_COLOR = "125, 211, 252"; // cyan-ish, rgb triplet for rgba()
-const LINK_COLOR = "139, 92, 246"; // violet
 
 /**
- * Toile de fond : nœuds qui dérivent lentement et se relient quand ils sont
- * proches, comme un graphe de réseau blockchain. Purement décoratif
- * (aria-hidden, pointer-events: none) ; s'arrête sur prefers-reduced-motion.
+ * Toile de fond : des nœuds qui dérivent lentement, sans traits de liaison —
+ * juste un nuage de points lumineux (halo), comme un réseau vu de loin.
+ * Purement décoratif (aria-hidden, pointer-events: none) ; s'arrête sur
+ * prefers-reduced-motion.
  */
 export function NetworkBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -63,28 +62,15 @@ export function NetworkBackground() {
         if (n.y < 0 || n.y > height) n.vy *= -1;
       }
 
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.hypot(dx, dy);
-          if (dist < LINK_DISTANCE) {
-            ctx!.strokeStyle = `rgba(${LINK_COLOR}, ${0.14 * (1 - dist / LINK_DISTANCE)})`;
-            ctx!.lineWidth = 1;
-            ctx!.beginPath();
-            ctx!.moveTo(nodes[i].x, nodes[i].y);
-            ctx!.lineTo(nodes[j].x, nodes[j].y);
-            ctx!.stroke();
-          }
-        }
-      }
-
       for (const n of nodes) {
-        ctx!.fillStyle = `rgba(${NODE_COLOR}, 0.55)`;
+        ctx!.shadowColor = `rgba(${NODE_COLOR}, 0.9)`;
+        ctx!.shadowBlur = 6;
+        ctx!.fillStyle = `rgba(${NODE_COLOR}, 0.65)`;
         ctx!.beginPath();
-        ctx!.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
+        ctx!.arc(n.x, n.y, 1.7, 0, Math.PI * 2);
         ctx!.fill();
       }
+      ctx!.shadowBlur = 0;
 
       if (!reduceMotion) frameId = requestAnimationFrame(step);
     }
