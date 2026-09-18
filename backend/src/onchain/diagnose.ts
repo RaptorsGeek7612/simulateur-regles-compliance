@@ -151,13 +151,22 @@ export async function diagnose(
   }
 
   // --- Verdict global -------------------------------------------------------
-  let allowed = false;
+  let compliancePasses = false;
   try {
-    allowed = await compliance.canTransfer(from, to, amount);
+    compliancePasses = await compliance.canTransfer(from, to, amount);
   } catch {
     /* ignoré : le détail par module est plus informatif */
   }
-  findings.push({ stage: "verdict", label: "compliance.canTransfer", ok: allowed });
+  findings.push({ stage: "verdict", label: "compliance.canTransfer", ok: compliancePasses });
+
+  // compliance.canTransfer() ne vérifie que les modules de compliance — pause,
+  // gel et solde disponible sont des require() séparés dans Token.transfer(),
+  // absents de canTransfer(). Un transfert peut donc échouer alors que
+  // canTransfer() renvoie true (confirmé contre le contrat T-REX de référence :
+  // voir contracts/token/Token.sol#transfer chez TokenySolutions/T-REX).
+  // Le verdict global doit donc dépendre de TOUS les findings, pas du seul
+  // appel canTransfer().
+  const allowed = findings.every((f) => f.ok);
 
   return { allowed, findings };
 }

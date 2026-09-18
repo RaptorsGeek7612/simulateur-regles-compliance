@@ -114,6 +114,31 @@ describe("diagnose", () => {
     expect(findingFor(findings, "solde suffisant")?.ok).toBe(false);
   });
 
+  // compliance.canTransfer() only checks bound modules — pause, freeze and
+  // balance are separate require()s in the real Token.transfer(), so a
+  // transfer can revert even when canTransfer() itself returns true.
+  // Confirmed against the reference T-REX contract (see diagnose.ts).
+  it("denies the overall transfer when the balance is insufficient, even if compliance.canTransfer() itself passes", async () => {
+    contracts.set(TOKEN_ADDR, defaultToken({ balanceOf: async () => 100n }));
+    contracts.set(COMPLIANCE_ADDR, defaultCompliance({ canTransfer: async () => true }));
+    const result = await diagnose(provider, TOKEN_ADDR, FROM, TO, amount);
+    expect(findingFor(result.findings, "compliance.canTransfer")?.ok).toBe(true);
+    expect(result.allowed).toBe(false);
+  });
+
+  it("denies the overall transfer when the token is paused, even if compliance.canTransfer() itself passes", async () => {
+    contracts.set(TOKEN_ADDR, defaultToken({ paused: async () => true }));
+    contracts.set(COMPLIANCE_ADDR, defaultCompliance({ canTransfer: async () => true }));
+    const result = await diagnose(provider, TOKEN_ADDR, FROM, TO, amount);
+    expect(result.allowed).toBe(false);
+  });
+
+  it("allows the overall transfer only when every single finding passes", async () => {
+    const result = await diagnose(provider, TOKEN_ADDR, FROM, TO, amount);
+    expect(result.allowed).toBe(true);
+    expect(result.findings.every((f) => f.ok)).toBe(true);
+  });
+
   it("flags a frozen sender and recipient separately", async () => {
     contracts.set(TOKEN_ADDR, defaultToken({ isFrozen: async (addr: string) => addr === FROM }));
     const { findings } = await diagnose(provider, TOKEN_ADDR, FROM, TO, amount);
