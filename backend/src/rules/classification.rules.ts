@@ -105,7 +105,7 @@ export const classificationRules: Rule[] = [
     id: "classification-other-crypto-asset",
     area: "classification",
     title: "Autre crypto-actif (ni EMT, ni ART)",
-    articleRef: "Titre II, art. 4 à 14 (approximatif)",
+    articleRef: "Titre II, art. 4 à 15 (approximatif)",
     when: { field: "derived.isOtherCryptoAsset", op: "eq", value: true },
     result: {
       verdict: "applicable",

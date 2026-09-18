@@ -2,10 +2,13 @@ import type { Rule } from "../engine/types.js";
 
 /**
  * Obligations d'émetteur. Seuils chiffrés simplifiés à des fins pédagogiques
- * (voir disclaimer du README) — plusieurs exemptions réelles de l'art. 16
- * MiCA (investisseurs qualifiés, <150 personnes par État membre, ticket
- * minimum 100 000 €) sont fusionnées ici en un seuil de valeur d'offre
- * unique pour rester lisibles dans un questionnaire court.
+ * (voir disclaimer du README) — l'art. 16 MiCA prévoit deux voies de dispense
+ * alternatives (valeur moyenne en circulation ≤ 5 000 000 € sur 12 mois, OU
+ * offre/détention réservée aux investisseurs qualifiés), fusionnées ici en un
+ * seuil de valeur unique pour rester lisibles dans un questionnaire court.
+ * (Les seuils "<150 personnes par État membre" / "ticket ≥ 100 000 €" qui
+ * figuraient précédemment ici appartiennent au règlement Prospectus (UE)
+ * 2017/1129, pas à MiCA — corrigé après vérification, voir CONTRIBUTING.md.)
  */
 export const issuerObligationsRules: Rule[] = [
   {
@@ -118,7 +121,7 @@ export const issuerObligationsRules: Rule[] = [
         "Désigner un établissement de crédit ou une EME dépositaire de la réserve d'actifs",
       ],
       explanation:
-        "Au-dessus du seuil simplifié de 5 000 000 € sur 12 mois, un ART ne bénéficie plus des dispenses d'agrément de l'art. 16 (offre à des investisseurs qualifiés uniquement, <150 personnes par État membre, ticket minimum 100 000 €). Ces dispenses réelles sont plus fines que ce seuil unique — à vérifier au cas par cas.",
+        "Au-dessus du seuil simplifié de 5 000 000 € sur 12 mois, un ART ne bénéficie plus de la dispense d'agrément de l'art. 16§2(a). La seconde voie de dispense (art. 16§2(b) : offre et détention réservées aux investisseurs qualifiés) reste théoriquement ouverte indépendamment de ce seuil — ce questionnaire ne la distingue pas, à vérifier au cas par cas.",
     },
   },
   {
@@ -138,7 +141,7 @@ export const issuerObligationsRules: Rule[] = [
       label: "Dispense d'agrément ART possible — à vérifier au cas par cas",
       obligations: [
         "Un livre blanc reste requis même en cas de dispense d'agrément",
-        "Vérifier les critères réels de l'art. 16 (investisseurs qualifiés, <150 personnes/État membre, ticket ≥ 100 000 €) — non capturés en détail par ce seuil simplifié",
+        "Vérifier laquelle des deux voies de dispense de l'art. 16§2 s'applique réellement (seuil de 5 000 000 € OU offre/détention réservée aux investisseurs qualifiés) — ce questionnaire ne teste que la première",
       ],
       explanation:
         "Sous le seuil simplifié de 5 000 000 €, une dispense d'agrément est envisageable mais dépend de critères qualitatifs que ce questionnaire ne détaille pas entièrement.",

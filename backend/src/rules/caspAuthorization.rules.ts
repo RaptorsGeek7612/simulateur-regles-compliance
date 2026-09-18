@@ -3,7 +3,11 @@ import type { Rule } from "../engine/types.js";
 /**
  * Agrément et obligations des prestataires de services sur crypto-actifs
  * (CASP — Titre V). Seuils de fonds propres minimaux simplifiés depuis
- * l'Annexe IV MiCA à des fins pédagogiques (voir README).
+ * l'Annexe IV MiCA à des fins pédagogiques (voir README). Les trois paliers
+ * (50 000 € / 125 000 € / 150 000 €) existent bien dans l'Annexe IV, mais la
+ * répartition exacte de chacun des 10 services CASP entre les trois paliers
+ * n'a pas été vérifiée service par service ici — à confirmer contre le texte
+ * avant toute décision réelle, en particulier pour le service d'échange.
  */
 export const caspAuthorizationRules: Rule[] = [
   {
