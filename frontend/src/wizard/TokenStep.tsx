@@ -35,7 +35,7 @@ export function TokenStep({
     <div className="wizard-step">
       <h2>Le token</h2>
       <p className="wizard-step__intro">
-        Nature, offre et taille du crypto-actif — ces réponses déterminent sa classification (EMT / ART / jeton
+        Nature, offre et taille du crypto-actif : ces réponses déterminent sa classification (EMT / ART / jeton
         utilitaire / autre) et les seuils d'obligations applicables.
       </p>
       <div className="field-grid">

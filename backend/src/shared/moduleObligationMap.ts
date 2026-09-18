@@ -23,31 +23,31 @@ export const MODULE_OBLIGATION_MAP: ModuleObligationLink[] = [
     moduleName: "MaxHolderCountModule",
     ruleIds: ["issuer-authorization-art-exempt", "issuer-authorization-art"],
     note:
-      "Plafonne le nombre de porteurs on-chain — traduit techniquement les seuils d'exemption d'agrément (\"moins de 150 personnes par État membre\") de l'art. 16.",
+      "Plafonne le nombre de porteurs on-chain : traduit techniquement les seuils d'exemption d'agrément (\"moins de 150 personnes par État membre\") de l'art. 16.",
   },
   {
     moduleName: "MinimumTicketModule",
     ruleIds: ["issuer-authorization-art-exempt", "issuer-authorization-art"],
     note:
-      "Impose un montant minimal par souscription — traduit le critère de ticket minimum (100 000 €) des dispenses d'agrément de l'art. 16.",
+      "Impose un montant minimal par souscription : traduit le critère de ticket minimum (100 000 €) des dispenses d'agrément de l'art. 16.",
   },
   {
     moduleName: "LockupModule",
     ruleIds: ["issuer-reserve-of-assets"],
     note:
-      "Bloque le transfert pendant une période donnée — utilisé typiquement pour respecter des engagements de conservation liés à la réserve d'actifs ou à un lock-up contractuel, pas une obligation MiCA directe en tant que telle.",
+      "Bloque le transfert pendant une période donnée, utilisé typiquement pour respecter des engagements de conservation liés à la réserve d'actifs ou à un lock-up contractuel, pas une obligation MiCA directe en tant que telle.",
   },
   {
     moduleName: "BlackoutPeriodModule",
     ruleIds: ["market-abuse-insider-dealing", "market-abuse-manipulation"],
     note:
-      "Interdit les transferts pendant une fenêtre donnée (ex. avant publication de résultats) — traduction technique des interdictions d'abus de marché du Titre VI.",
+      "Interdit les transferts pendant une fenêtre donnée (ex. avant publication de résultats) : traduction technique des interdictions d'abus de marché du Titre VI.",
   },
   {
     moduleName: "ClaimRequiredModule",
     ruleIds: ["casp-general-conduct", "issuer-general-duties"],
     note:
-      "Exige une créance ONCHAINID valide avant transfert — traduit les obligations de connaissance du porteur/client (KYC) sous-jacentes aux obligations générales d'émetteur et de CASP.",
+      "Exige une créance ONCHAINID valide avant transfert : traduit les obligations de connaissance du porteur/client (KYC) sous-jacentes aux obligations générales d'émetteur et de CASP.",
   },
 ];
 

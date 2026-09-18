@@ -59,7 +59,7 @@ export const issuerObligationsRules: Rule[] = [
   {
     id: "issuer-small-offer-exemption",
     area: "issuer_obligations",
-    title: "Dispense de livre blanc — petite offre",
+    title: "Dispense de livre blanc : petite offre",
     articleRef: "Art. 4§2 (approximatif)",
     when: {
       all: [
@@ -83,7 +83,7 @@ export const issuerObligationsRules: Rule[] = [
   {
     id: "issuer-free-of-charge-exemption",
     area: "issuer_obligations",
-    title: "Dispense de livre blanc — offre gratuite",
+    title: "Dispense de livre blanc : offre gratuite",
     articleRef: "Art. 4§1 (approximatif)",
     when: {
       all: [
@@ -94,7 +94,7 @@ export const issuerObligationsRules: Rule[] = [
     },
     result: {
       verdict: "not_applicable",
-      label: "Livre blanc non requis — crypto-actif offert gratuitement",
+      label: "Livre blanc non requis : crypto-actif offert gratuitement",
       obligations: [],
       explanation:
         "Une offre réellement gratuite (aucune contrepartie, y compris en données personnelles utilisées à des fins commerciales) échappe aux obligations de livre blanc du Titre II.",
@@ -121,7 +121,7 @@ export const issuerObligationsRules: Rule[] = [
         "Désigner un établissement de crédit ou une EME dépositaire de la réserve d'actifs",
       ],
       explanation:
-        "Au-dessus du seuil simplifié de 5 000 000 € sur 12 mois, un ART ne bénéficie plus de la dispense d'agrément de l'art. 16§2(a). La seconde voie de dispense (art. 16§2(b) : offre et détention réservées aux investisseurs qualifiés) reste théoriquement ouverte indépendamment de ce seuil — ce questionnaire ne la distingue pas, à vérifier au cas par cas.",
+        "Au-dessus du seuil simplifié de 5 000 000 € sur 12 mois, un ART ne bénéficie plus de la dispense d'agrément de l'art. 16§2(a). La seconde voie de dispense (art. 16§2(b) : offre et détention réservées aux investisseurs qualifiés) reste théoriquement ouverte indépendamment de ce seuil, ce questionnaire ne la distingue pas, à vérifier au cas par cas.",
     },
   },
   {
@@ -138,10 +138,10 @@ export const issuerObligationsRules: Rule[] = [
     },
     result: {
       verdict: "warning",
-      label: "Dispense d'agrément ART possible — à vérifier au cas par cas",
+      label: "Dispense d'agrément ART possible, à vérifier au cas par cas",
       obligations: [
         "Un livre blanc reste requis même en cas de dispense d'agrément",
-        "Vérifier laquelle des deux voies de dispense de l'art. 16§2 s'applique réellement (seuil de 5 000 000 € OU offre/détention réservée aux investisseurs qualifiés) — ce questionnaire ne teste que la première",
+        "Vérifier laquelle des deux voies de dispense de l'art. 16§2 s'applique réellement (seuil de 5 000 000 € OU offre/détention réservée aux investisseurs qualifiés) : ce questionnaire ne teste que la première",
       ],
       explanation:
         "Sous le seuil simplifié de 5 000 000 €, une dispense d'agrément est envisageable mais dépend de critères qualitatifs que ce questionnaire ne détaille pas entièrement.",
@@ -196,7 +196,7 @@ export const issuerObligationsRules: Rule[] = [
         "Passer par un établissement déjà agréé pour émettre le jeton pour le compte de l'émetteur",
       ],
       explanation:
-        "L'art. 48 MiCA réserve l'émission d'EMT aux établissements de crédit et aux établissements de monnaie électronique. En l'état des réponses, ce n'est le cas d'aucun des deux — l'émission telle que décrite n'est pas conforme.",
+        "L'art. 48 MiCA réserve l'émission d'EMT aux établissements de crédit et aux établissements de monnaie électronique. En l'état des réponses, ce n'est le cas d'aucun des deux, l'émission telle que décrite n'est pas conforme.",
     },
   },
   {

@@ -17,7 +17,7 @@ export const classificationRules: Rule[] = [
   {
     id: "classification-excluded-financial-instrument",
     area: "classification",
-    title: "Instrument financier — hors champ MiCA",
+    title: "Instrument financier : hors champ MiCA",
     articleRef: "Art. 2§4 (approximatif)",
     when: { field: "token.isFinancialInstrument", op: "eq", value: true },
     result: {
@@ -31,7 +31,7 @@ export const classificationRules: Rule[] = [
   {
     id: "classification-excluded-nft",
     area: "classification",
-    title: "NFT unique et non fongible — hors champ MiCA",
+    title: "NFT unique et non fongible : hors champ MiCA",
     articleRef: "Considérant 11 (approximatif)",
     when: {
       all: [
@@ -44,7 +44,7 @@ export const classificationRules: Rule[] = [
       label: "Hors champ MiCA : unique et non fongible",
       obligations: [],
       explanation:
-        "Les crypto-actifs uniques et non fongibles (au sens strict — pas une simple collection fractionnée ou en grande série) sont en principe exclus de MiCA. Attention : une collection de NFT quasi-identiques peut être requalifiée en crypto-actif fongible par le régulateur.",
+        "Les crypto-actifs uniques et non fongibles (au sens strict, pas une simple collection fractionnée ou en grande série) sont en principe exclus de MiCA. Attention : une collection de NFT quasi-identiques peut être requalifiée en crypto-actif fongible par le régulateur.",
     },
   },
   {
@@ -60,7 +60,7 @@ export const classificationRules: Rule[] = [
         "Régime du Titre IV : livre blanc, agrément et réserve d'actifs dédiés à l'EMT",
       ],
       explanation:
-        "Le jeton vise à maintenir une valeur stable en référençant une seule monnaie fiat ayant cours légal — c'est la définition d'un electronic money token (EMT). Il relève du Titre IV de MiCA, avec des obligations proches de la monnaie électronique classique (directive 2009/110/CE).",
+        "Le jeton vise à maintenir une valeur stable en référençant une seule monnaie fiat ayant cours légal : c'est la définition d'un electronic money token (EMT). Il relève du Titre IV de MiCA, avec des obligations proches de la monnaie électronique classique (directive 2009/110/CE).",
     },
   },
   {
@@ -76,13 +76,13 @@ export const classificationRules: Rule[] = [
         "Régime du Titre III : livre blanc, agrément de l'autorité compétente, réserve d'actifs",
       ],
       explanation:
-        "Le jeton vise à maintenir une valeur stable en référençant plusieurs actifs, une matière première ou un panier — c'est la définition d'un asset-referenced token (ART). Il relève du Titre III de MiCA.",
+        "Le jeton vise à maintenir une valeur stable en référençant plusieurs actifs, une matière première ou un panier : c'est la définition d'un asset-referenced token (ART). Il relève du Titre III de MiCA.",
     },
   },
   {
     id: "classification-utility-exempt",
     area: "classification",
-    title: "Jeton utilitaire — exemption partielle de livre blanc",
+    title: "Jeton utilitaire : exemption partielle de livre blanc",
     articleRef: "Art. 4§3 (approximatif)",
     when: {
       all: [

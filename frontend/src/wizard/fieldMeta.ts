@@ -6,7 +6,7 @@ export interface FieldMeta {
 export const tokenFieldMeta: Record<string, FieldMeta> = {
   isFinancialInstrument: {
     label: "Instrument financier (MiFID II)",
-    help: "Si oui, le jeton est hors champ MiCA (art. 2§4) — c'est le droit des marchés financiers classique qui s'applique.",
+    help: "Si oui, le jeton est hors champ MiCA (art. 2§4) : c'est le droit des marchés financiers classique qui s'applique.",
   },
   isNFTUnique: {
     label: "Unique et non fongible (NFT au sens strict)",

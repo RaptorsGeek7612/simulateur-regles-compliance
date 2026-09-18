@@ -42,7 +42,7 @@ export function Layout() {
 
       <footer className="app__footer">
         <span className="app__footer-dot" aria-hidden="true" />
-        Outil pédagogique — ne remplace pas un avis juridique. Voir les limites connues dans le README.
+        Outil pédagogique, ne remplace pas un avis juridique. Voir les limites connues dans le README.
       </footer>
     </div>
   );

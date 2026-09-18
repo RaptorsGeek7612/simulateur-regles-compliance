@@ -71,7 +71,7 @@ export function OnchainScenario() {
     <div className="page">
       <h1>Rejeu de scénarios</h1>
       <p className="page__intro">
-        Rejoue le diagnostic on-chain sur une liste de cas et compare au résultat attendu — non-régression pour les
+        Rejoue le diagnostic on-chain sur une liste de cas et compare au résultat attendu : non-régression pour les
         règles de conformité, pas pour le code.
       </p>
 

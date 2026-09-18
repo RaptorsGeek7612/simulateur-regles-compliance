@@ -55,7 +55,7 @@ export function OnchainDiagnose() {
     <div className="page">
       <h1>Diagnostic on-chain</h1>
       <p className="page__intro">
-        Pourquoi un transfert donné passe ou échoue — pause, solde, gel, identité ONCHAINID, puis chaque module de
+        Pourquoi un transfert donné passe ou échoue : pause, solde, gel, identité ONCHAINID, puis chaque module de
         compliance branché. Lecture seule, aucune transaction envoyée.
       </p>
 

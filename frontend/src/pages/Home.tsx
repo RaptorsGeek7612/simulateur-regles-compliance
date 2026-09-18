@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 export function Home() {
   return (
     <div className="home">
-      <p className="home__intro">
-        Vérifie un security token ERC-3643 (T-REX) sous deux angles complémentaires, reliés entre eux.
-      </p>
+      <h1 className="home__hero">
+        Vérifie un <span className="home__hero-accent">security token ERC-3643</span> (T-REX) sous deux angles
+        complémentaires, reliés entre eux.
+      </h1>
       <div className="home__cards">
         <Link to="/onchain" className="home__card">
           <h2>Diagnostic on-chain</h2>
           <p>
-            Pourquoi un transfert donné passe ou échoue — pause, solde, gel, identité ONCHAINID, puis chaque module
+            Pourquoi un transfert donné passe ou échoue : pause, solde, gel, identité ONCHAINID, puis chaque module
             de compliance branché. Lecture seule, aucune transaction envoyée.
           </p>
         </Link>
