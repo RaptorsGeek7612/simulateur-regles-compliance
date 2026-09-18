@@ -1,0 +1,39 @@
+name: Bug
+description: Un comportement incorrect dans le diagnostic on-chain, le moteur MiCA ou l'interface
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: zone
+    attributes:
+      label: Zone concernée
+      options:
+        - backend (diagnostic on-chain)
+        - backend (règles MiCA)
+        - frontend
+        - CI / déploiement
+        - documentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Ce qui se passe, ce qui était attendu
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Étapes de reproduction
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexte additionnel
+      description: Logs, capture d'écran, version, réseau utilisé...
+    validations:
+      required: false

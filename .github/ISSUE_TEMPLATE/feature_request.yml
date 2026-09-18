@@ -1,0 +1,24 @@
+name: Amélioration
+description: Une nouvelle règle, un nouveau module, ou une amélioration de l'interface
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: zone
+    attributes:
+      label: Zone concernée
+      options:
+        - backend (diagnostic on-chain)
+        - backend (règles MiCA)
+        - frontend
+        - CI / déploiement
+        - documentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Ce que tu voudrais voir, et pourquoi
+    validations:
+      required: true
