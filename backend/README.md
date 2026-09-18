@@ -1,5 +1,7 @@
 # Backend — API + CLI
 
+[![CI](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml)
+
 Projet pnpm indépendant (pas de `package.json` racine, voir [`../CONTRIBUTING.md`](../CONTRIBUTING.md)). Deux volets partageant le même serveur Express :
 
 - **Diagnostic on-chain** (`src/onchain/`, `src/api/onchain.ts`, `src/cli.ts`) — pourquoi un transfert ERC-3643 (T-REX) passe ou échoue. Lecture seule, aucune transaction envoyée.
