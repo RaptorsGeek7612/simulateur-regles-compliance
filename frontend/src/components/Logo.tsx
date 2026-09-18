@@ -1,22 +1,34 @@
 /**
- * Marque : trois blocs hexagonaux empilés en profondeur (la chaîne, vue de
- * biais) qui convergent vers un bloc de premier plan marqué d'un checkmark
- * ("le dernier bloc, vérifié conforme"). Une particule orbite en continu
- * autour du bloc avant — le réseau qui continue de tourner — et un halo
- * respire doucement derrière l'ensemble.
+ * Marque : un composant hexagonal façon puce (die) avec ses broches, tracé
+ * comme un schéma technique — repères d'angle en coin (viseur de scan), via
+ * point de jonction sur la piste, broches/pads en carré. Le checkmark
+ * central est dessiné comme une piste de circuit (segments + via), pas une
+ * coche organique. Un paquet carré orbite le long d'une piste circulaire
+ * autour de la puce.
  */
 export function Logo({ size = 32, animated = true }: { size?: number; animated?: boolean }) {
   const gradientId = "logo-gradient";
   const haloId = "logo-halo-gradient";
-  const centerPivot = "translate(24 24) scale(SCALE) translate(-24 -24)";
-  const hexPoints = "24,4 40.78,14 40.78,34 24,44 7.22,34 7.22,14";
-  const vertices: [number, number][] = [
-    [24, 4],
-    [40.78, 14],
-    [40.78, 34],
-    [24, 44],
-    [7.22, 34],
-    [7.22, 14],
+
+  const hexPoints = "24,11 35.26,17.5 35.26,30.5 24,37 12.74,30.5 12.74,17.5";
+  const pins: { leg: [number, number, number, number]; pad: [number, number]; even: boolean }[] = [
+    { leg: [24, 11, 24, 6], pad: [24, 4], even: true },
+    { leg: [35.26, 17.5, 39.5, 15], pad: [41.32, 14], even: false },
+    { leg: [35.26, 30.5, 39.5, 33], pad: [41.32, 34], even: true },
+    { leg: [24, 37, 24, 42], pad: [24, 44], even: false },
+    { leg: [12.74, 30.5, 8.5, 33], pad: [6.68, 34], even: true },
+    { leg: [12.74, 17.5, 8.5, 15], pad: [6.68, 14], even: false },
+  ];
+
+  const corners: [number, number, number, number][] = [
+    [3, 8, 3, 3],
+    [3, 3, 8, 3],
+    [45, 8, 45, 3],
+    [45, 3, 40, 3],
+    [3, 40, 3, 45],
+    [3, 45, 8, 45],
+    [45, 40, 45, 45],
+    [45, 45, 40, 45],
   ];
 
   return (
@@ -36,50 +48,46 @@ export function Logo({ size = 32, animated = true }: { size?: number; animated?:
           <stop offset="100%" stopColor="var(--accent-magenta)" />
         </linearGradient>
         <radialGradient id={haloId} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="var(--accent-violet)" stopOpacity="0.55" />
+          <stop offset="0%" stopColor="var(--accent-violet)" stopOpacity="0.5" />
           <stop offset="100%" stopColor="var(--accent-violet)" stopOpacity="0" />
         </radialGradient>
       </defs>
 
       <circle cx="24" cy="24" r="23" fill={`url(#${haloId})`} className="logo-mark__halo" />
 
-      {/* deux blocs en retrait, pour suggérer la profondeur de la chaîne */}
-      <polygon
-        points={hexPoints}
-        transform={`translate(-6 -6) ${centerPivot.replace("SCALE", "0.58")}`}
-        stroke="var(--accent-violet)"
-        strokeWidth="2"
-        strokeLinejoin="round"
-        fill="none"
-        opacity="0.28"
-      />
-      <polygon
-        points={hexPoints}
-        transform={`translate(-3 -3) ${centerPivot.replace("SCALE", "0.79")}`}
-        stroke="var(--accent-cyan)"
-        strokeWidth="2"
-        strokeLinejoin="round"
-        fill="none"
-        opacity="0.45"
-      />
-
-      {/* bloc de premier plan, vérifié */}
-      <polygon points={hexPoints} stroke={`url(#${gradientId})`} strokeWidth="2.5" strokeLinejoin="round" fill="none" />
-      <path d="M15.5 24.5 L21 30 L33 17" stroke={`url(#${gradientId})`} strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-
-      {vertices.map(([cx, cy], i) => (
-        <circle
-          key={i}
-          cx={cx}
-          cy={cy}
-          r={i % 2 === 0 ? 2.1 : 1.5}
-          fill={i % 2 === 0 ? "var(--accent-cyan)" : "var(--accent-violet)"}
-          className={animated ? "logo-mark__node" : undefined}
-          style={animated ? { animationDelay: `${i * 0.35}s` } : undefined}
-        />
+      {/* repères de coin, façon viseur/scan technique */}
+      {corners.map(([x1, y1, x2, y2], i) => (
+        <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--accent-cyan)" strokeWidth="1.4" strokeLinecap="round" opacity="0.55" />
       ))}
 
-      {animated && <circle r="1.8" fill="var(--accent-magenta)" className="logo-mark__orbit" />}
+      {/* broches : patte + pad carré, comme un boîtier de circuit intégré */}
+      {pins.map(({ leg: [x1, y1, x2, y2], pad: [px, py], even }, i) => (
+        <g key={i}>
+          <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={even ? "var(--accent-cyan)" : "var(--accent-violet)"} strokeWidth="1.6" opacity="0.85" />
+          <rect
+            x={px - 1.6}
+            y={py - 1.6}
+            width="3.2"
+            height="3.2"
+            rx="0.6"
+            fill={even ? "var(--accent-cyan)" : "var(--accent-violet)"}
+            className={animated ? "logo-mark__node" : undefined}
+            style={animated ? { animationDelay: `${i * 0.32}s` } : undefined}
+          />
+        </g>
+      ))}
+
+      {/* corps de la puce */}
+      <polygon points={hexPoints} stroke={`url(#${gradientId})`} strokeWidth="2.2" strokeLinejoin="round" fill="rgba(10, 14, 26, 0.7)" />
+      {/* repère d'orientation (pin 1), comme sur un vrai boîtier CI */}
+      <circle cx="16.5" cy="20" r="1.1" fill="var(--accent-gold)" />
+
+      {/* checkmark rendu comme une piste de circuit : segment + via + segment */}
+      <path d="M17.5 24.5 L21.5 28.5" stroke={`url(#${gradientId})`} strokeWidth="2.6" strokeLinecap="round" fill="none" />
+      <path d="M21.5 28.5 L31 18" stroke={`url(#${gradientId})`} strokeWidth="2.6" strokeLinecap="round" fill="none" />
+      <rect x="20.1" y="27.1" width="2.8" height="2.8" rx="0.6" fill="var(--bg-base)" stroke={`url(#${gradientId})`} strokeWidth="1.2" />
+
+      {animated && <rect x="-1.5" y="-1.5" width="3" height="3" rx="0.8" fill="var(--accent-magenta)" className="logo-mark__orbit" />}
     </svg>
   );
 }

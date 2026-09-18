@@ -247,7 +247,8 @@ code {
 }
 
 .logo-mark__orbit {
-  offset-path: circle(21px at 24px 24px);
+  offset-path: circle(23px at 24px 24px);
+  offset-rotate: 0deg;
   animation: logo-orbit 5.5s linear infinite;
   filter: drop-shadow(0 0 4px var(--accent-magenta));
 }
