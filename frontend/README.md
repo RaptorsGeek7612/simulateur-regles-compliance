@@ -1,5 +1,7 @@
 # Frontend — interface web
 
+[![CI](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml)
+
 Projet pnpm indépendant (pas de `package.json` racine, voir [`../CONTRIBUTING.md`](../CONTRIBUTING.md)). App React (Vite + `react-router-dom`), sans framework CSS — un seul feuillet de styles (`src/index.css`) avec variables CSS et support clair/sombre via `prefers-color-scheme`.
 
 Ne fait aucun calcul métier elle-même : c'est un client de l'API du backend (voir [`../backend/README.md`](../backend/README.md) pour le contrat des routes).
