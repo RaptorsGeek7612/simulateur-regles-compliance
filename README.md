@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml)
 
+**App en ligne : [simulateur-compliance-frontend.vercel.app](https://simulateur-compliance-frontend.vercel.app)** (frontend Vercel + [API backend](https://api-production-5fff.up.railway.app/health) sur Railway). Sans `RPC_URL`/`TOKEN_ADDRESS` configurés côté serveur — renseigne-les dans le formulaire du diagnostic on-chain pour tester contre un vrai token.
+
 Vérifie un security token ERC-3643 (T-REX) sous deux angles complémentaires, reliés entre eux :
 
 - **Diagnostic on-chain** : pourquoi un transfert donné passe ou échoue — pause, solde, gel, identité ONCHAINID, puis chaque module de compliance branché (`MaxHolderCountModule`, `MinimumTicketModule`, `LockupModule`, `BlackoutPeriodModule`, `ClaimRequiredModule`). Lecture seule, aucune transaction envoyée. Inclut un mode "scénario" pour rejouer un fichier de cas attendus en non-régression.
