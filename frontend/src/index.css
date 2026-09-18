@@ -16,6 +16,7 @@
   --accent-cyan: #22d3ee;
   --accent-violet: #8b5cf6;
   --accent-magenta: #e879f9;
+  --accent-gold: #d4b483;
   --accent-gradient: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-violet) 55%, var(--accent-magenta) 100%);
   --accent-gradient-soft: linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(139, 92, 246, 0.14) 55%, rgba(232, 121, 249, 0.14));
 
@@ -28,6 +29,7 @@
   --neutral: #94a3b8;
   --neutral-glow: rgba(148, 163, 184, 0.25);
 
+  --font-display: "Fraunces", "Iowan Old Style", ui-serif, Georgia, serif;
   --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -195,16 +197,36 @@ code {
 }
 
 .app__brand {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
   color: var(--text-primary);
 }
 
 .logo-mark {
+  position: relative;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.45));
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
+  overflow: visible;
+}
+
+.logo-mark__halo {
+  transform-origin: center;
+  animation: halo-breathe 4.2s ease-in-out infinite;
+}
+
+@keyframes halo-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
 }
 
 .logo-mark__node {
@@ -224,27 +246,59 @@ code {
   }
 }
 
+.logo-mark__orbit {
+  offset-path: circle(21px at 24px 24px);
+  animation: logo-orbit 5.5s linear infinite;
+  filter: drop-shadow(0 0 4px var(--accent-magenta));
+}
+
+@keyframes logo-orbit {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* halo ambiant derrière le lockup de marque, dans le header */
+.app__brand::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 64px;
+  height: 64px;
+  transform: translateY(-50%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.35), transparent 70%);
+  filter: blur(14px);
+  z-index: -1;
+  animation: halo-breathe 4.2s ease-in-out infinite;
+}
+
 .app__brand-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
+/* Calligraphie institutionnelle : une serif d'autorité (Fraunces) plutôt
+   qu'un texte en dégradé — le sceau d'un régulateur, pas un logo de startup. */
 .app__brand-title {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.05rem;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
 }
 
 .app__brand-subtitle {
-  font-size: 0.7rem;
-  color: var(--text-tertiary);
-  letter-spacing: 0.04em;
+  font-family: var(--font-heading);
+  font-size: 0.66rem;
+  color: var(--accent-gold);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  margin-top: 2px;
 }
 
 .nav {
@@ -278,7 +332,18 @@ code {
   color: var(--bg-void);
   background: var(--accent-gradient);
   font-weight: 600;
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 42px rgba(139, 92, 246, 0.22);
+  animation: pill-halo 3s ease-in-out infinite;
+}
+
+@keyframes pill-halo {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 42px rgba(139, 92, 246, 0.22);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(34, 211, 238, 0.5), 0 0 56px rgba(139, 92, 246, 0.32);
+  }
 }
 
 .app__main {
@@ -331,6 +396,24 @@ code {
 /* Home                                                                     */
 /* ---------------------------------------------------------------------- */
 
+.home {
+  position: relative;
+}
+
+.home::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: -8%;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.16), transparent 70%);
+  filter: blur(70px);
+  z-index: -1;
+  pointer-events: none;
+  animation: halo-breathe 7s ease-in-out infinite;
+}
+
 .home__intro {
   font-size: 1.15rem;
   color: var(--text-secondary);
@@ -360,15 +443,6 @@ code {
   animation: fade-up 0.6s var(--ease) both;
 }
 
-.home__cards .home__card:nth-child(1) {
-  animation-delay: 0.05s;
-}
-.home__cards .home__card:nth-child(2) {
-  animation-delay: 0.15s;
-}
-.home__cards .home__card:nth-child(3) {
-  animation-delay: 0.25s;
-}
 
 .home__card::before {
   content: "";
@@ -379,13 +453,42 @@ code {
   transition: opacity 0.3s var(--ease);
 }
 
+/* halo qui infuse depuis le coin haut-droit, une teinte différente par carte */
+.home__card::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -30%;
+  width: 60%;
+  height: 90%;
+  background: radial-gradient(circle, var(--card-glow, var(--accent-violet)), transparent 70%);
+  opacity: 0;
+  filter: blur(30px);
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+
+.home__cards .home__card:nth-child(1) {
+  animation-delay: 0.05s;
+  --card-glow: var(--accent-cyan);
+}
+.home__cards .home__card:nth-child(2) {
+  animation-delay: 0.15s;
+  --card-glow: var(--accent-violet);
+}
+.home__cards .home__card:nth-child(3) {
+  animation-delay: 0.25s;
+  --card-glow: var(--accent-magenta);
+}
+
 .home__card:hover {
   transform: translateY(-4px);
   border-color: var(--border-strong);
   box-shadow: 0 12px 40px -12px rgba(139, 92, 246, 0.35);
 }
 
-.home__card:hover::before {
+.home__card:hover::before,
+.home__card:hover::after {
   opacity: 1;
 }
 
@@ -427,11 +530,39 @@ code {
 /* ---------------------------------------------------------------------- */
 
 .page h1 {
-  font-size: 1.8rem;
+  position: relative;
+  display: inline-block;
+  padding-left: 22px;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.page h1::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  border-radius: 999px;
   background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.6);
+}
+
+.page h1::after {
+  content: "";
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  width: 180px;
+  height: 180px;
+  transform: translateY(-50%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.25), transparent 70%);
+  filter: blur(30px);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .page__intro {
@@ -532,12 +663,24 @@ code {
   cursor: pointer;
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background-position 0.4s var(--ease);
   box-shadow: 0 6px 24px -6px rgba(139, 92, 246, 0.55);
+  animation: button-halo 3.4s ease-in-out infinite;
+}
+
+@keyframes button-halo {
+  0%,
+  100% {
+    box-shadow: 0 6px 24px -6px rgba(139, 92, 246, 0.55);
+  }
+  50% {
+    box-shadow: 0 6px 30px -4px rgba(34, 211, 238, 0.65);
+  }
 }
 
 .button:hover:not(:disabled) {
   transform: translateY(-1px);
   background-position: 100% 0%;
-  box-shadow: 0 10px 32px -6px rgba(139, 92, 246, 0.7);
+  box-shadow: 0 10px 40px -4px rgba(139, 92, 246, 0.85);
+  animation: none;
 }
 
 .button:active:not(:disabled) {
@@ -606,19 +749,19 @@ code {
 .badge--ok {
   color: var(--ok);
   background: rgba(52, 211, 153, 0.12);
-  box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.3), 0 0 14px -4px var(--ok-glow);
 }
 
 .badge--ko {
   color: var(--ko);
   background: rgba(251, 113, 133, 0.12);
-  box-shadow: inset 0 0 0 1px rgba(251, 113, 133, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(251, 113, 133, 0.3), 0 0 14px -3px var(--ko-glow);
 }
 
 .badge--warning {
   color: var(--warning);
   background: rgba(251, 191, 36, 0.12);
-  box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.3), 0 0 14px -4px var(--warning-glow);
 }
 
 .badge--neutral {
@@ -813,6 +956,7 @@ code {
   border-color: transparent;
   background: var(--accent-gradient-soft);
   box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.4), 0 0 18px rgba(139, 92, 246, 0.25);
+  animation: pill-halo 3s ease-in-out infinite;
 }
 
 .wizard__step--active::before {
@@ -888,9 +1032,11 @@ code {
 
 .rule-result--applicable {
   border-left-color: var(--ok);
+  box-shadow: -10px 0 30px -20px var(--ok-glow);
 }
 .rule-result--warning {
   border-left-color: var(--warning);
+  box-shadow: -10px 0 30px -20px var(--warning-glow);
 }
 .rule-result--not_applicable {
   border-left-color: var(--neutral);
