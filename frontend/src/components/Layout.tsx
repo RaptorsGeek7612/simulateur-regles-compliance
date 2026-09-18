@@ -15,7 +15,7 @@ export function Layout() {
 
       <header className="app__header">
         <NavLink to="/" className="app__brand">
-          <Logo size={34} />
+          <Logo size={42} />
           <span className="app__brand-text">
             <span className="app__brand-title">Simulateur</span>
             <span className="app__brand-subtitle">règles de compliance</span>
