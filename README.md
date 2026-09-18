@@ -1,5 +1,7 @@
 # Simulateur de règles de compliance
 
+[![CI](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml)
+
 Vérifie un security token ERC-3643 (T-REX) sous deux angles complémentaires, reliés entre eux :
 
 - **Diagnostic on-chain** : pourquoi un transfert donné passe ou échoue — pause, solde, gel, identité ONCHAINID, puis chaque module de compliance branché (`MaxHolderCountModule`, `MinimumTicketModule`, `LockupModule`, `BlackoutPeriodModule`, `ClaimRequiredModule`). Lecture seule, aucune transaction envoyée. Inclut un mode "scénario" pour rejouer un fichier de cas attendus en non-régression.
