@@ -8,18 +8,16 @@ export function Home() {
         complémentaires, reliés entre eux.
       </h1>
       <div className="home__cards">
-        <Link to="/onchain" className="home__card">
+        <Link to="/onchain" className="home__card home__card--primary">
+          <span className="home__card-eyebrow">01</span>
           <h2>Diagnostic on-chain</h2>
           <p>
             Pourquoi un transfert donné passe ou échoue : pause, solde, gel, identité ONCHAINID, puis chaque module
             de compliance branché. Lecture seule, aucune transaction envoyée.
           </p>
         </Link>
-        <Link to="/onchain/scenarios" className="home__card">
-          <h2>Rejeu de scénarios</h2>
-          <p>Rejoue un fichier de cas attendus contre le diagnostic on-chain, en non-régression.</p>
-        </Link>
-        <Link to="/mica" className="home__card">
+        <Link to="/mica" className="home__card home__card--primary">
+          <span className="home__card-eyebrow">02</span>
           <h2>Questionnaire MiCA</h2>
           <p>
             À partir d'un questionnaire (rôle émetteur/CASP, caractéristiques du token, services fournis...), évalue
@@ -27,6 +25,12 @@ export function Home() {
           </p>
         </Link>
       </div>
+      <Link to="/onchain/scenarios" className="home__card home__card--secondary">
+        <h2>Rejeu de scénarios</h2>
+        <p>
+          Mode complémentaire du diagnostic on-chain : rejoue un fichier de cas attendus, en non-régression.
+        </p>
+      </Link>
       <p className="home__disclaimer">
         Chaque volet renvoie vers l'autre : une obligation MiCA affiche les modules on-chain qui l'implémentent
         techniquement, et un module bloquant un transfert affiche l'obligation MiCA qu'il traduit. Outil pédagogique,
