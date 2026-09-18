@@ -182,18 +182,7 @@ code {
   background: rgba(10, 14, 26, 0.72);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border-bottom: 1px solid var(--border);
-}
-
-.app__header::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 1px;
-  background: var(--accent-gradient);
-  opacity: 0.5;
+  box-shadow: 0 8px 30px -12px rgba(139, 92, 246, 0.35);
 }
 
 .app__brand {
@@ -377,11 +366,11 @@ code {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 20px 24px;
+  padding: 28px 24px 24px;
   text-align: center;
   font-size: 0.8rem;
   color: var(--text-tertiary);
-  border-top: 1px solid var(--border);
+  box-shadow: 0 -8px 30px -14px rgba(34, 211, 238, 0.25);
 }
 
 .app__footer-dot {
@@ -792,10 +781,9 @@ code {
   align-items: flex-start;
   padding: 12px 16px;
   border: 1px solid var(--border);
-  border-left: 3px solid var(--neutral);
   border-radius: var(--radius-sm);
   background: var(--bg-glass);
-  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
 .findings__item:hover {
@@ -803,10 +791,10 @@ code {
 }
 
 .findings__item:has(.badge--ok) {
-  border-left-color: var(--ok);
+  box-shadow: 0 0 22px -12px var(--ok-glow);
 }
 .findings__item:has(.badge--ko) {
-  border-left-color: var(--ko);
+  box-shadow: 0 0 22px -10px var(--ko-glow);
 }
 
 .findings__item-label {
@@ -1004,7 +992,6 @@ code {
   position: relative;
   padding: 18px 20px;
   border: 1px solid var(--border);
-  border-left: 3px solid var(--neutral);
   border-radius: var(--radius);
   background: var(--bg-glass);
   backdrop-filter: blur(10px);
@@ -1018,15 +1005,14 @@ code {
 }
 
 .rule-result--applicable {
-  border-left-color: var(--ok);
-  box-shadow: -10px 0 30px -20px var(--ok-glow);
+  box-shadow: 0 0 34px -16px var(--ok-glow);
+  background: linear-gradient(120deg, rgba(52, 211, 153, 0.07), transparent 40%), var(--bg-glass);
 }
 .rule-result--warning {
-  border-left-color: var(--warning);
-  box-shadow: -10px 0 30px -20px var(--warning-glow);
+  box-shadow: 0 0 34px -16px var(--warning-glow);
+  background: linear-gradient(120deg, rgba(251, 191, 36, 0.07), transparent 40%), var(--bg-glass);
 }
 .rule-result--not_applicable {
-  border-left-color: var(--neutral);
   opacity: 0.85;
 }
 
