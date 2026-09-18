@@ -3,6 +3,7 @@ import { z } from "zod";
 import { JsonRpcProvider } from "ethers";
 import { diagnose } from "../onchain/diagnose.js";
 import { runScenarios, type ScenarioCase } from "../onchain/scenarioRunner.js";
+import { assertPublicRpcUrl, SsrfBlockedError } from "../onchain/ssrfGuard.js";
 
 const addressSchema = z.string().regex(/^0x[0-9a-fA-F]{40}$/, "adresse Ethereum invalide");
 const amountSchema = z.string().regex(/^[0-9]+$/, "montant invalide (entier en unités de base, chaîne de chiffres)");
@@ -26,13 +27,26 @@ const scenarioCaseSchema = z.object({
 const scenarioSchema = z.object({
   rpcUrl: z.string().url().optional(),
   tokenAddress: addressSchema.optional(),
-  cases: z.array(scenarioCaseSchema).min(1),
+  cases: z.array(scenarioCaseSchema).min(1).max(50, "50 cas maximum par requête"),
 });
 
-function resolveProvider(rpcUrl?: string): JsonRpcProvider {
+/**
+ * `rpcUrl` fourni par le client passe par assertPublicRpcUrl() (garde SSRF) ;
+ * RPC_URL côté serveur est une valeur de config admin, pas besoin de la
+ * revalider à chaque requête.
+ */
+async function resolveProvider(rpcUrl?: string): Promise<JsonRpcProvider> {
   const url = rpcUrl || process.env.RPC_URL;
   if (!url) {
     throw new HttpError(400, "Aucun RPC_URL fourni (ni dans la requête, ni côté serveur).");
+  }
+  if (rpcUrl) {
+    try {
+      await assertPublicRpcUrl(rpcUrl);
+    } catch (e) {
+      if (e instanceof SsrfBlockedError) throw new HttpError(400, e.message);
+      throw e;
+    }
   }
   return new JsonRpcProvider(url);
 }
@@ -72,7 +86,7 @@ onchainRouter.post("/diagnose", async (req, res) => {
   const { rpcUrl, tokenAddress, from, to, amount } = parsed.data;
 
   try {
-    const provider = resolveProvider(rpcUrl);
+    const provider = await resolveProvider(rpcUrl);
     const token = resolveToken(tokenAddress);
     const result = await diagnose(provider, token, from, to, BigInt(amount));
     res.json(result);
@@ -95,7 +109,7 @@ onchainRouter.post("/scenario", async (req, res) => {
   const { rpcUrl, tokenAddress, cases } = parsed.data;
 
   try {
-    const provider = resolveProvider(rpcUrl);
+    const provider = await resolveProvider(rpcUrl);
     const token = resolveToken(tokenAddress);
     const result = await runScenarios(provider, token, cases as ScenarioCase[]);
     res.json(result);

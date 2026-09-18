@@ -58,9 +58,11 @@ Toutes les routes répondent en JSON. Une erreur de validation renvoie `400` ave
 
 - **`GET /config`** — `{ hasDefaultRpc: boolean, defaultTokenAddress: string | null }`, pour que le frontend sache si le formulaire peut rester vide.
 - **`POST /diagnose`** — body : `{ rpcUrl?, tokenAddress?, from, to, amount }` (`from`/`to` : adresses `0x…` ; `amount` : chaîne de chiffres, unités de base du token, pas l'unité affichée). Réponse : `{ allowed: boolean, findings: Finding[] }`.
-- **`POST /scenario`** — body : `{ rpcUrl?, tokenAddress?, cases: ScenarioCase[] }` où chaque cas est `{ name, from, to, amount, expect: "allow" | "deny" }`. Réponse : `{ results: ScenarioCaseResult[], summary: { passed, total } }`. Voir `scenarios.example.json` pour un exemple.
+- **`POST /scenario`** — body : `{ rpcUrl?, tokenAddress?, cases: ScenarioCase[] }` où chaque cas est `{ name, from, to, amount, expect: "allow" | "deny" }` (**50 cas maximum par requête**). Réponse : `{ results: ScenarioCaseResult[], summary: { passed, total } }`. Voir `scenarios.example.json` pour un exemple.
 
 `rpcUrl`/`tokenAddress` sont optionnels dans le body : à défaut, le serveur retombe sur `RPC_URL`/`TOKEN_ADDRESS` de l'environnement ; si ni l'un ni l'autre n'est disponible, `400`.
+
+**Garde-fou SSRF** (`src/onchain/ssrfGuard.ts`) : un `rpcUrl` fourni par le client fait faire au serveur des requêtes HTTP vers une cible qu'il ne contrôle pas — sans contrôle, un visiteur pourrait pointer vers une adresse interne (réseau privé Railway, `169.254.169.254`/métadonnées cloud, `localhost`) et se servir du backend comme relais. Tout `rpcUrl` du body est donc résolu en DNS et rejeté (`400`) si l'IP est privée, loopback ou link-local. Le `RPC_URL` de l'environnement (config admin) n'est jamais soumis à ce contrôle. **Effet de bord en dev local** : un `rpcUrl` pointant vers ton propre `localhost` dans le formulaire sera refusé — configure plutôt `RPC_URL` dans `.env` pour tester contre un nœud local.
 
 ## CLI
 

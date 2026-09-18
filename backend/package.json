@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "type": "module",
   "packageManager": "pnpm@12.4.2",
-  "bin": { "sim": "./dist/cli.js" },
+  "bin": {
+    "sim": "./dist/cli.js"
+  },
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc -p tsconfig.json",
@@ -27,6 +29,6 @@
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0",
-    "vitest": "^2.1.0"
+    "vitest": "^3.2.7"
   }
 }

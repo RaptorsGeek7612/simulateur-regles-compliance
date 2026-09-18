@@ -93,6 +93,27 @@ describe("POST /api/onchain/diagnose", () => {
     expect(body.error).toMatch(/RPC_URL/);
   });
 
+  it("rejects a client-supplied private/internal rpcUrl with a 400 (SSRF guard), without calling diagnose", async () => {
+    const res = await fetch(`${server.baseUrl}/api/onchain/diagnose`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rpcUrl: "http://169.254.169.254", from: FROM, to: TO, amount: "1000" }),
+    });
+    expect(res.status).toBe(400);
+    expect(mockDiagnose).not.toHaveBeenCalled();
+  });
+
+  it("accepts a client-supplied rpcUrl pointing at a public IP literal", async () => {
+    mockDiagnose.mockResolvedValueOnce({ allowed: true, findings: [] });
+    const res = await fetch(`${server.baseUrl}/api/onchain/diagnose`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rpcUrl: "http://8.8.8.8:8545", from: FROM, to: TO, amount: "1000" }),
+    });
+    expect(res.status).toBe(200);
+    expect(mockDiagnose).toHaveBeenCalled();
+  });
+
   it("returns a 502 when the on-chain read itself fails", async () => {
     mockDiagnose.mockRejectedValueOnce(new Error("connection refused"));
     const res = await fetch(`${server.baseUrl}/api/onchain/diagnose`, {
@@ -128,6 +149,17 @@ describe("POST /api/onchain/scenario", () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ cases: [] }),
+    });
+    expect(res.status).toBe(400);
+    expect(mockRunScenarios).not.toHaveBeenCalled();
+  });
+
+  it("rejects more than 50 cases in a single request with a 400", async () => {
+    const cases = Array.from({ length: 51 }, (_, i) => ({ name: `c${i}`, from: FROM, to: TO, amount: "1", expect: "allow" }));
+    const res = await fetch(`${server.baseUrl}/api/onchain/scenario`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cases }),
     });
     expect(res.status).toBe(400);
     expect(mockRunScenarios).not.toHaveBeenCalled();

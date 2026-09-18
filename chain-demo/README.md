@@ -55,3 +55,4 @@ railway domain --service chain   # génère l'URL publique si pas déjà fait
 
 - Chaîne en mémoire : un redémarrage du conteneur reset l'état (soldes, gels, etc.) mais **pas** les adresses (déterministes). Ne sert que de démo, ne stocke rien d'important.
 - Aucune garantie de disponibilité (plan Railway gratuit).
+- **Les comptes Hardhat par défaut ont des clés privées publiquement connues** (affichées par `hardhat node` lui-même au démarrage). N'importe qui peut donc signer une transaction en tant que `deployer`/`tokenAgent` et modifier l'état du token de démo (mint, pause, gel...) directement via le RPC, sans passer par le backend. Accepté comme risque : aucune valeur réelle n'est en jeu, c'est le prix d'un token toujours accessible sans configuration. Ne jamais réutiliser ce schéma pour un déploiement qui gère de la vraie valeur.
