@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RaptorsGeek7612/simulateur-regles-compliance/actions/workflows/ci.yml)
 
-Projet pnpm indépendant (pas de `package.json` racine, voir [`../CONTRIBUTING.md`](../CONTRIBUTING.md)). App React (Vite + `react-router-dom`), sans framework CSS — un seul feuillet de styles (`src/index.css`) avec variables CSS et support clair/sombre via `prefers-color-scheme`.
+Projet pnpm indépendant (pas de `package.json` racine, voir [`../CONTRIBUTING.md`](../CONTRIBUTING.md)). App React (Vite + `react-router-dom`), sans framework CSS — un seul feuillet de styles (`src/index.css`, thème sombre uniquement, variables CSS).
 
 Ne fait aucun calcul métier elle-même : c'est un client de l'API du backend (voir [`../backend/README.md`](../backend/README.md) pour le contrat des routes).
 
@@ -28,6 +28,7 @@ pnpm dev         # serveur de dev Vite
 pnpm build       # tsc -b puis vite build → dist/
 pnpm preview     # sert le build de dist/
 pnpm typecheck   # tsc --noEmit
+pnpm test        # vitest run (Testing Library + jsdom)
 ```
 
 ## Pages
@@ -49,14 +50,17 @@ Le lien croisé entre les deux volets (voir `backend/src/shared/moduleObligation
 src/
   api/          client HTTP typé (client.ts : fetch + gestion d'erreur ; mica.ts, onchain.ts : un appel par route backend)
   types/        types miroirs des réponses backend (mica.ts, onchain.ts)
-  components/   Layout (nav), Badge, FindingsList, ObligationLinks — partagés entre pages
+  components/   Layout (nav), Logo, NetworkBackground (toile de fond animée), Badge, FindingsList, ObligationLinks — partagés entre pages
   wizard/       les 4 étapes du questionnaire MiCA + fieldMeta.ts (libellés/aide en français par champ)
   pages/        Home, OnchainDiagnose, OnchainScenario, MicaWizard
+  test/         setup.ts (Testing Library + jest-dom, chargé par vitest.config.ts)
   App.tsx, main.tsx, index.css
 ```
+
+Chaque module de `api/`, `components/` et `pages/` a son `*.test.ts(x)` à côté (mocks des modules `api/*` via `vi.mock`, pas d'appel réseau réel).
 
 ## Limites connues
 
 - Aucune validation métier côté client au-delà des types : la validation réelle (Zod) est côté backend, les erreurs `400` sont affichées telles quelles.
-- Pas de tests automatisés sur ce projet pour l'instant — vérifié manuellement (Playwright headless) lors du développement initial : navigation, wizard MiCA de bout en bout, gestion d'erreur sur échec RPC.
+- Les tests couvrent le client API, les composants partagés et les pages `MicaWizard`/`OnchainDiagnose` (rendu, erreurs, navigation) — pas de tests end-to-end automatisés (vérifié manuellement en Playwright headless pendant le développement, y compris contre le déploiement réel).
 - Outil pédagogique — ne remplace pas un avis juridique (voir le README racine pour le disclaimer complet).

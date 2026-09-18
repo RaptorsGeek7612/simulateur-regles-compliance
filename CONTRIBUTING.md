@@ -30,6 +30,7 @@ pnpm run test
 cd frontend
 pnpm build
 pnpm exec tsc --noEmit
+pnpm run test
 ```
 
 ## Commits
